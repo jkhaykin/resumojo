@@ -1,0 +1,12 @@
+<% if current_user.present? %>
+<%= form_for [@resupload, Suggestion.new] do |f| %>
+	<p><%= f.label :comment, "New comment" %><br/></p>
+	<%= f.text_area :comment %>
+	<input name="suggestion[xcoord]" type="hidden">
+	<input name="suggestion[ycoord]" type="hidden">
+	<p><%= f.submit "Add comment", class: "btn btn-success", :style => "padding:2px 7px;margin-top:10px;" %></p>
+<% end %>
+<% else %>
+<h5>Whoops! You need to sign in to do that!</h5>
+<%= render 'devise/sessions/new' %>
+<% end %>

@@ -1,0 +1,24 @@
+<h1>Resumes</h1>
+	<div class="mt"></div>
+	  <% @resuploads.each do |resupload| %>
+				 <a href="/resumes/<%= resupload.id %>/<%= resupload.document_file_name %>"><%= image_tag resupload.document.url, style: "width: 15%; border: 3px solid black;" %></a>
+	   <% end %>
+</div>
+		
+	<div class="row mt centered">
+		<div class="col-lg-7 col-lg-offset-1 mt">
+			<p class="lead">Welcome! This is a place where you can get resume advice from your friends in the Scholarship Junkies community. You can also help out by posting comments on other resumes. If you have any questions for the Scholarship Junkies staff, please click Email Us.</p>
+		</div>
+			
+		<div class="col-lg-3 mt">
+			<p><button type="button" class="btn btn-theme btn-lg">Email Us!</button></p>
+		</div>
+<br>
+
+<form class="new_invite" id="new_invite" action="http://producthunt.com/my/invites" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓">
+      <div class="invite--invites-form">
+        <input placeholder="Sorry… You have no invites left." class="input invite--form-input" type="text" name="invite[username]" id="invite_username">
+        <input type="text" name="invite[role]" id="invite_role">
+        <input type="submit" name="commit" value="Invite" data-disable-with="Sending invitation..." class="button v-green">
+      </div>
+</form>

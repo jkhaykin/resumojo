@@ -1,0 +1,87 @@
+<center>
+<% User.where(:id => @resupload.user_id).each do |user| %>
+<h1><b><a target="_blank" href="<%= user.profile %>"><%= user.full_name %>'s Resume</a></b></h1>
+<h4><%= user.headline %></h4>
+<% end %>
+</center>
+<div id="imagecontainer">
+	<%= image_tag @resupload.document.url, id: "resume" %>
+	<div id="newcomment"></div>
+	<% @suggestions.each do |s| %>
+	<div id="box<%= s.id %>" style="position:absolute; margin-top:<%= s.ycoord %>px; margin-left:<%= s.xcoord %>px;">
+		<img id="marker<%= s.id %>" src="<%= User.where(:id => s.user_id).first.image %>" width="16" height="16" style="border-radius:50px;">
+		<div id="displayComment<%= s.id %>" class="displayComment">
+		<p id="comment" stlye="font-weight:bold;"><%= s.comment %></p>
+		<a target="_blank" style="color:#74cfae;" href="<%= User.find(s.user.id).profile %>">
+			<h4 style="font-weight:bold;color:#74cfae;">- <%= User.find(s.user_id).full_name %></h4>
+		</a>
+		<h6><%= User.find(s.user_id).headline %></h6>
+		</div>
+	</div>
+	<script>
+	$('#marker<%= s.id %>').mouseover(function(){
+		$('#displayComment<%= s.id %>').show();
+	});
+
+	$('#box<%= s.id %>').mouseleave(function(){
+    	$('#displayComment<%= s.id %>').hide();
+    });
+	</script>
+<% end %>
+</div>
+
+<% if @resupload.user_id == current_user %>
+<td><%= link_to 'Destroy', @resupload, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+<% else %>
+<% end %>
+
+<script>
+$('#resume').click(function (e) { //Default mouse Position 
+        var offset = $(this).offset();
+        $('#newcomment').html("<%= escape_javascript(render(:partial => 'suggestions/new')) %>");
+        $('#newcomment').css( {position:"absolute", "margin-top": (e.pageY - offset.top), "margin-left": (e.pageX - offset.left), background: "white", padding: "20px", border: "2px solid black"});
+        $('input[name="suggestion[xcoord]"]').val(e.pageX - offset.left);
+        $('input[name="suggestion[ycoord]"]').val(e.pageY - offset.top);
+    });
+    
+</script>
+
+<style>
+#imagecontainer {
+	width: 960px;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+}
+#resume {
+	border: 2px solid black;
+	position: absolute;
+	width: 100%;
+	margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+}
+
+.displayComment {
+	border: 2px solid black;
+	border-radius: 5px;
+	overflow: auto;
+	background:white;
+	padding:20px;
+	display:none;
+}
+
+#newcomment {
+	border-radius: 5px;
+	z-index: 100;
+    position: absolute; 
+}
+
+#comment {
+	font-size: 13px;
+	width: 250px;
+	padding: 10px;
+}
+
+
+</style>
