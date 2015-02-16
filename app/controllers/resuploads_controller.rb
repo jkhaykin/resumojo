@@ -26,7 +26,7 @@ class ResuploadsController < ApplicationController
     @resupload.user = current_user
     @resupload.save
     respond_with(@resupload) do |format|
-    	format.html {redirect_to "/resumes/#{@resupload.id}/#{@resupload.document_file_name}" }
+    	format.html {redirect_to "/resumes/#{@resupload.id}" }
     end
   end
 
